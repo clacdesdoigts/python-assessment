@@ -75,15 +75,16 @@ Your submission will be evaluated on:
 This repository provides a basic structure to get you started. You can modify it as needed.
 
 1. Clone this repository
-2. Create a virtual environment and install dependencies
+2. Make sure to have python 3.11.11 installed
+3. Create a virtual environment and install dependencies
    ```
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
-3. Create a `.env` file with your OpenAI API key
-4. Implement the required functionality
-5. Test your implementation
+4. Create a `.env` file with your OpenAI API key
+5. ```uvicorn app:app --reload```
+6. Implement the required functionality
 
 ## Submission
 
@@ -92,7 +93,6 @@ Please provide:
 1. Your complete source code in a GitHub repository
 2. A README with:
    - Setup instructions
-   - API documentation 
    - Brief explanation of your architecture
    - Design decisions and trade-offs
    - Ideas for future improvements

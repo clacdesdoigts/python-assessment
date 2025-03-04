@@ -22,20 +22,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Authentication
-security = HTTPBearer()
-
-# Authentication dependency
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Validate API token"""
-    api_token = os.getenv("API_TOKEN", "test-token")
-    if credentials.credentials != api_token:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication token"
-        )
-    return {"token": credentials.credentials}
-
 # API Endpoints
 @app.get("/")
 async def root():
@@ -45,7 +31,6 @@ async def root():
 @app.post("/documents/upload")
 async def upload_document(
     file: UploadFile = File(...),
-    current_user: dict = Depends(get_current_user)
 ):
     """
     Upload and process a document file (PDF, TXT, etc.)
@@ -54,9 +39,7 @@ async def upload_document(
     return {"status": "not_implemented"}
 
 @app.get("/documents")
-async def get_documents(
-    current_user: dict = Depends(get_current_user)
-):
+async def get_documents():
     """
     Get all uploaded documents
     """
@@ -66,7 +49,6 @@ async def get_documents(
 @app.post("/questions/ask", response_model=QuestionResponse)
 async def ask_question(
     request: QuestionRequest,
-    current_user: dict = Depends(get_current_user)
 ):
     """
     Ask a question about uploaded documents
@@ -77,7 +59,6 @@ async def ask_question(
 @app.post("/agents/complex-query", response_model=ComplexQueryResponse)
 async def complex_query(
     request: ComplexQueryRequest,
-    current_user: dict = Depends(get_current_user)
 ):
     """
     Process a complex query using multiple agents
